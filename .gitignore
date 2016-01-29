@@ -45,3 +45,5 @@ bower_components/*
 css/*
 bower.json
 .bowerrc
+sass/*
+css/*

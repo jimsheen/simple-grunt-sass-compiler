@@ -22,23 +22,67 @@ module.exports = function(grunt) {
 
 
     // Initial config
-    var config = {
-        pkg: grunt.file.readJSON('package.json')
-    };
+    // var config = {
+    //     pkg: grunt.file.readJSON('package.json')
+    // };
 
 
     // Load tasks from the tasks folder
-    grunt.loadTasks('tasks');
+    // grunt.loadTasks('tasks');
 
-    // Load all the tasks options in tasks/options base on the name:
-    // watch.js => watch{}
-    grunt.util._.extend(config, loadConfig('./tasks/options/'));
+    // // Load all the tasks options in tasks/options base on the name:
+    // // watch.js => watch{}
+    // grunt.util._.extend(config, loadConfig('./tasks/options/'));
 
-    grunt.initConfig(config);
+    // grunt.initConfig(config);
 
     require('load-grunt-tasks')(grunt);
 
 
+    grunt.loadTasks('tasks');
+
+
+    var sassOptions = grunt.file.readJSON('sassOptions.json');
+
+    var config = {
+        sass: { // Task
+            dist: { // Target
+                options: { // Target options
+                    style: 'expanded'
+                },
+                files: { // Dictionary of files
+                    [sassOptions.dest + '/main.css']: [sassOptions.src + '/*.scss'],
+                }
+            }
+        },
+        cssmin: {
+            combine: {
+                files: {
+                    [sassOptions.dest + '/main.min.css']: [sassOptions.src + '/*.scss'],
+                }
+            }
+        },
+        watch: {
+            options: {
+                livereload: true,
+            },
+            css: {
+                files: [sassOptions.src + '/*.scss', sassOptions.src + '/includes/*.scss'],
+                tasks: ['sass', 'cssmin'],
+                options: {
+                    spawn: false,
+                }
+            }
+        }
+    };
+
+    grunt.initConfig(config);
+
+
+    grunt.registerTask('default', ['sass', 'cssmin', 'watch']);
+
+
+    // grunt.loadNpmTasks('grunt-contrib-sass');
 
     // grunt.registerTask("your-task-name", "your description", function() {
 
@@ -77,7 +121,7 @@ module.exports = function(grunt) {
             dest: sassOptions.dest + '/main.css'
         };
 
-         grunt.config.set('sass', sass);
+        grunt.config.set('sass', sass);
 
         grunt.task.run('sass');
 

@@ -1,6 +1,6 @@
 <h1>Jim's Grunt Bower Boilerplate for Initial Project Setup</h1>
 
-<h2>How to set up</h2>
+<h2>Set up</h2>
 <pre>
 <code>
 cd 'directory' <br>
@@ -10,7 +10,7 @@ npm install <br>
 </code> 
 </pre>
 
-<p>Run npm install then either grunt dev or grunt watch</p>
+<p>Edit the file sassOptions to point to the directory your SASS folder is in and where you want it to compile to. (src and dest)</p>
 
 
 <h3>Packages used</h3>
